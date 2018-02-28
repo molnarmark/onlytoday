@@ -5,27 +5,32 @@
 function OnlyToday(code) {
   this.stack = [];
   this.code = code;
-  this.sp = 0;
+  this.sp = -1;
+  this.ip = 0;
+  this.logger = true;
   this.instructions = this.initInstructionSet();
+}
+
+OnlyToday.prototype.log = function(message) {
+  if (this.logger)
+    console.log('[OnlyToday Logger] ' + message);
 }
 
 OnlyToday.prototype.initInstructionSet = function() {
   var now = new Date();
   var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-  instructions = {
-    PUSH: now.getFullYear(),
-    COMPARE: now.getMonth() + 1,
+  return {
+    PUSH: now.getFullYear().toString(),
+    COMPARE: (now.getMonth() + 1).toString(),
 
     LOOPSTART: '1970[',
     LOOPEND: ']',
 
-    ASCII: now.getHours(),
-    JUMP: now.getDate(),
+    ASCII: now.getHours().toString(),
+    JUMP: now.getDate().toString(),
 
     POP: 'I hate ' + weekdays[now.getDay()],
-
-    TOP: 'In ' + now.getFullYear() - 1 + ' i wasnt at the top..',
     INPUT: 'What is ' + now.getFullYear() + 1 + ' holding for me?',
 
     SUM: '+',
@@ -33,58 +38,164 @@ OnlyToday.prototype.initInstructionSet = function() {
     MUL: '*',
     DIV: '/',
 
-    OUTPUT: now.getFullYear() + ' is my year!',
+    OUTPUT: (now.getFullYear() + 1).toString() + ' will be my year!',
   }
 }
 
-OnlyToday.prototype.push = function() {
-  // Push N on the stack, sp++
+OnlyToday.prototype.push = function(value) {
+  this.log('PUSH');
+  if (this.stack[this.sp] === undefined) {
+    this.stack[this.sp] = (value == null) ? 1 : value;
+  } else {
+    this.stack[this.sp] += (value == null) ? 1 : value;
+  }
 }
 
 OnlyToday.prototype.pop = function() {
-  // Pop stack[sp], return value to interpreter
+  this.log('POP');
+  this.sp = this.stack.length - 1;
+  return this.stack.pop();
 }
 
 OnlyToday.prototype.loop = function() {
-
-}
-
-OnlyToday.prototype.top = function() {
-  // Move sp to the top of the stack
+  // TODO Add support for this
 }
 
 OnlyToday.prototype.compare = function() {
-  // compare sp & sp - 1 and push result to the stack
+  this.push((this.stack[this.ip] == this.pop()) ? 0 : -1);
 }
 
 OnlyToday.prototype.jump = function() {
-  // set sp to the value at sp
+  this.ip = this.pop() - 1;
 }
 
 OnlyToday.prototype.sum = function() {
-  // pop sp, sp - 1 and push sum of sp & sp - 1 to the stack
+  this.log('SUM');
+  var left = this.pop();
+  var right = this.pop();
+  this.push(left + right);
 }
 
 OnlyToday.prototype.dif = function() {
-  // pop sp, sp - 1 and push dif of sp & sp - 1 to the stack
+  this.log('DIF');
+  var left = this.pop();
+  var right = this.pop();
+  this.push(right - left);
 }
 
 OnlyToday.prototype.mul = function() {
-  // pop sp, sp - 1 and push mul of sp & sp - 1 to the stack
+  this.log('MUL');
+  var left = this.pop();
+  var right = this.pop();
+  this.push(left * right);
 }
 
 OnlyToday.prototype.div = function() {
-  // pop sp, sp - 1 and push div of sp & sp - 1 to the stack
+  this.log('DIV');
+  var left = this.pop();
+  var right = this.pop();
+  this.push(left / right);
 }
 
 OnlyToday.prototype.input = function() {
-  // read input to top of the stack
+  // TODO read input to top of the stack
 }
 
-OnlyToday.prototype.input = function() {
-  // print the whole stack
+OnlyToday.prototype.output = function() {
+  console.log(this.stack);
 }
 
 OnlyToday.prototype.ascii = function() {
-  // pop value at sp, convert to ascii, push to stack
+  var value = this.pop();
+  this.push(String.fromCharCode(value.toString()));
 }
+
+OnlyToday.prototype.execute = function() {
+  var lines = this.code.split('\n');
+
+  for (var i = 0; i < lines.length; i++) {
+    var lineInstructions = lines[i].split(' ');
+
+    if (lineInstructions[0] == 'today') continue;
+
+    var startsWithInstruction = false;
+
+    for (var j = 0; j < lineInstructions.length; j++) {
+      var instruction = lineInstructions[j].trim();
+
+      switch (instruction) {
+        case this.instructions.PUSH:
+          startsWithInstruction = true;
+          this.push();
+          break;
+
+        case this.instructions.SUM:
+          startsWithInstruction = true;
+          this.sum();
+          break;
+
+        case this.instructions.DIF:
+          startsWithInstruction = true;
+          this.dif();
+          break;
+
+        case this.instructions.MUL:
+          startsWithInstruction = true;
+          this.mul();
+          break;
+
+          case this.instructions.DIV:
+            startsWithInstruction = true;
+            this.div();
+            break;
+
+          case this.instructions.ASCII:
+            startsWithInstruction = true;
+            this.ascii();
+            break;
+
+          case this.instructions.JUMP:
+            startsWithInstruction = true;
+            this.jump();
+            break;
+
+          case this.instructions.COMPARE:
+            startsWithInstruction = true;
+            this.compare();
+            break;
+      }
+    }
+
+    // Only reached if not a single word instruction was matched
+    if (!startsWithInstruction) {
+      console.log(lines[i])
+      switch (lines[i]) {
+        case this.instructions.POP:
+          this.pop();
+          break;
+        case this.instructions.OUTPUT:
+          this.output();
+          break;
+      }
+    }
+
+    this.sp = this.stack.length;
+  }
+}
+
+// Main entry
+
+var code = '\n\
+2018 2018\n\
+today pusholva: 2\n\
+2018 2018\n\
+today pusholva 2\n\
+2018\n\
+today még 1 felpusholva\n\
+28\n\
+today jumpolás a memóriacímre: 0\n\
+I hate wednesday\n\
+2019 will be my year!\n\
+'
+var interpreter = new OnlyToday(code);
+interpreter.execute();
