@@ -1,0 +1,22 @@
+{
+  "name": "onlytoday",
+  "version": "0.0.1",
+  "description": "An esoteric programming language that really challenges your brain!",
+  "main": "index.js",
+  "scripts": {
+    "es5": "node src/index_es5.js",
+    "es5_helloworld": "node src/index_es5.js examples/helloworld.onlytoday",
+    "es6": "node src/index_es6.js",
+    "es6_helloworld": "node src/index_es6.js examples/helloworld.onlytoday"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/molnarmark/onlytoday.git"
+  },
+  "author": "Mark Molnar <molnarpw@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/molnarmark/onlytoday/issues"
+  },
+  "homepage": "https://github.com/molnarmark/onlytoday#readme"
+}

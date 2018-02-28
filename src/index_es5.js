@@ -2,12 +2,14 @@
  * OnlyToday Original Implementation
  */
 
+const fs = require('fs');
+
 function OnlyToday(code) {
   this.stack = [];
   this.code = code;
-  this.sp = -1;
+  this.sp = 0;
   this.ip = 0;
-  this.logger = true;
+  this.logger = false;
   this.instructions = this.initInstructionSet();
 }
 
@@ -102,7 +104,7 @@ OnlyToday.prototype.input = function() {
 }
 
 OnlyToday.prototype.output = function() {
-  console.log(this.stack);
+  console.log(this.stack.join(''));
 }
 
 OnlyToday.prototype.ascii = function() {
@@ -116,7 +118,7 @@ OnlyToday.prototype.execute = function() {
   for (var i = 0; i < lines.length; i++) {
     var lineInstructions = lines[i].split(' ');
 
-    if (lineInstructions[0] == 'today' || lines[i] == '') continue;
+    if (lineInstructions[0] == 'today') continue;
 
     var startsWithInstruction = false;
 
@@ -180,8 +182,9 @@ OnlyToday.prototype.execute = function() {
       }
 
       if (!startsWithInstruction) {
-        console.log('Syntax error on line ' + (this.sp + 2) + '. Exiting.');
+        console.log('Syntax error on line ' + (this.sp + 1) + '. Exiting.');
         console.log('Error: Unknown instruction found.');
+        process.exit();
       }
     }
 
@@ -189,8 +192,5 @@ OnlyToday.prototype.execute = function() {
   }
 }
 
-// Main entry
-
-var code = '2018'
-var interpreter = new OnlyToday(code);
-interpreter.execute();
+var code = fs.readFileSync(process.argv[2]).toString();
+new OnlyToday(code).execute();
