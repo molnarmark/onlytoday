@@ -27,7 +27,7 @@ OnlyToday is stack based, and works with 13 instructions. They are as follows:
 *The table values are based on 28 February, 2018*
 
 ### Don't murder me
-OnlyToday is one of my very first stack based interpreter, so go easy on me. :smile:
+OnlyToday is one of my very first stack based interpreters, so go easy on me. :smile:
 
 ### License
 OnlyToday is licensed under MIT.
