@@ -1,10 +1,15 @@
-## 📅📆OnlyToday
+## 📅 OnlyToday
 OnlyToday is an esoteric programming language that works with dates and times.\
 The source code of an OnlyToday program is never the same!\
-The syntax of the language depends on the date, more specifically, the **HOUR** you write the code in.\
+The syntax of the language depends on the date, more specifically, the **HOUR** you write the code in.
+
+### Examples
+You can find some example(s) inside the `examples` folder.
 
 ### The Idea
+---
 OnlyToday is stack based, and works with 13 instructions. They are as follows:
+
 | Instruction | Example               | Operation                                                              |   |   |
 |:-----------:|-----------------------|------------------------------------------------------------------------|---|---|
 | PUSH        | 2018                  | Pushes '1' onto the stack                                              |   |   |
@@ -17,6 +22,7 @@ OnlyToday is stack based, and works with 13 instructions. They are as follows:
 | MUL         | *                     | Pops the top two elements of the stack and pushes the result on top    |   |   |
 | DIV         | /                     | Pops the top two elements of the stack and pushes the result on top    |   |   |
 | OUTPUT      | 2019 will be my year! | Prints the whole stack to stdout                                       |   |   |
+
 *The table values are based on 28 February, 2018*
 
 ### Don't murder me

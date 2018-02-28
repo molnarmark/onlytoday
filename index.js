@@ -185,17 +185,6 @@ OnlyToday.prototype.execute = function() {
 
 // Main entry
 
-var code = '\n\
-2018 2018\n\
-today pusholva: 2\n\
-2018 2018\n\
-today pusholva 2\n\
-2018\n\
-today még 1 felpusholva\n\
-28\n\
-today jumpolás a memóriacímre: 0\n\
-I hate wednesday\n\
-2019 will be my year!\n\
-'
+var code = ''
 var interpreter = new OnlyToday(code);
 interpreter.execute();
