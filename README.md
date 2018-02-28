@@ -7,7 +7,7 @@ The syntax of the language depends on the date, more specifically, the **HOUR** 
 You can find some example(s) inside the `examples` folder.
 
 ### The Idea
----
+
 OnlyToday is stack based, and works with 13 instructions. They are as follows:
 
 | Instruction | Example               | Operation                                                              |
