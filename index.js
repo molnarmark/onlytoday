@@ -116,7 +116,7 @@ OnlyToday.prototype.execute = function() {
   for (var i = 0; i < lines.length; i++) {
     var lineInstructions = lines[i].split(' ');
 
-    if (lineInstructions[0] == 'today') continue;
+    if (lineInstructions[0] == 'today' || lines[i] == '') continue;
 
     var startsWithInstruction = false;
 
@@ -168,14 +168,20 @@ OnlyToday.prototype.execute = function() {
 
     // Only reached if not a single word instruction was matched
     if (!startsWithInstruction) {
-      console.log(lines[i])
       switch (lines[i]) {
         case this.instructions.POP:
+          startsWithInstruction = true;
           this.pop();
           break;
         case this.instructions.OUTPUT:
+          startsWithInstruction = true;
           this.output();
           break;
+      }
+
+      if (!startsWithInstruction) {
+        console.log('Syntax error on line ' + (this.sp + 2) + '. Exiting.');
+        console.log('Error: Unknown instruction found.');
       }
     }
 
@@ -185,6 +191,6 @@ OnlyToday.prototype.execute = function() {
 
 // Main entry
 
-var code = ''
+var code = '2018'
 var interpreter = new OnlyToday(code);
 interpreter.execute();
