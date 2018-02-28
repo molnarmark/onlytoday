@@ -1,13 +1,13 @@
 ## 📅 OnlyToday
 OnlyToday is an esoteric programming language that works with dates and times.\
 The source code of an OnlyToday program is never the same!\
-The syntax of the language depends on the date, more specifically, the **HOUR** you write the code in.
+The syntax of the language depends on the date, more specifically, the **HOUR** you write the code in.\
+You can find both the EcmaScript 5 and EcmaScript 6 implementation in the `src` directory.
 
 ### Examples
-You can find some example(s) inside the `examples` folder.
+You can find some example(s) [here](https://github.com/molnarmark/onlytoday/tree/master/examples).
 
 ### The Idea
-
 OnlyToday is stack based, and works with 13 instructions. They are as follows:
 
 | Instruction | Example               | Operation                                                              |
