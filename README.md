@@ -22,6 +22,7 @@ OnlyToday is stack based, and works with 13 instructions. They are as follows:
 | MUL         | *                     | Pops the top two elements of the stack and pushes the result on top    |   |   |
 | DIV         | /                     | Pops the top two elements of the stack and pushes the result on top    |   |   |
 | OUTPUT      | 2019 will be my year! | Prints the whole stack to stdout                                       |   |   |
+| TODAY       | today is a nice day   | You can use today for comments                                         |   |   |
 
 *The table values are based on 28 February, 2018*
 
